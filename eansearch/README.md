@@ -1,24 +1,22 @@
-#!/usr/bin/env python3
+# EANSearch
 
-# Python 2.7
-#from eansearch2 import EANSearch
-# Python 3.x
-#from eansearch3 import EANSearch
-# Python 3.x package
+A Python class for EAN and ISBN name lookup and validation using the API on https://www.ean-search.org
+
+Compatible with Python 2.x **and** 3.x
+
+```python
 from eansearch import EANSearch
 
-# API token for ean-search.org account
-# https://www.ean-search.org/ean-database-api.html
-apiToken = "jw123"
+# get a token from https://www.ean-search.org/ean-database-api.html
+apiToken = "secret"
 ean = "5099750442227" # Thriller
-#ean = "5099750442228" # error
 
-eansearch = EANSearch(apiToken)
+lookup = EANSearch(apiToken)
 
-name = eansearch.barcodeLookup(ean)
+name = lookup.barcodeLookup(ean)
 print(ean, " is ", name)
 
-ok = eansearch.verifyChecksum(ean)
+ok = lookup.verifyChecksum(ean)
 print(ean, " is ", "OK" if ok else "Not OK")
 
 eanList = eansearch.productSearch('iPod');

@@ -1,0 +1,2 @@
+from .eansearch import EANSearch
+
