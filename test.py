@@ -1,15 +1,10 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
-# Python 2.7
-#from eansearch2 import EANSearch
-# Python 3.x
-#from eansearch3 import EANSearch
-# Python 3.x package
 from eansearch import EANSearch
 
 # API token for ean-search.org account
 # https://www.ean-search.org/ean-database-api.html
-apiToken = "jw123"
+apiToken = "secret"
 ean = "5099750442227" # Thriller
 #ean = "5099750442228" # error
 

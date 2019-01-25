@@ -10,12 +10,11 @@ setuptools.setup(name='eansearch',
       url='https://github.com/eansearch/python-ean-search',
       author='Jan Willamowius',
       author_email='info@relaxedcommunications.com',
-      license='MIT',
       classifiers=[
-          'License :: OSI Approved :: MIT',
-          'Programming Language :: Python :: 2'
-          'Programming Language :: Python :: 3'
-          'Operating System :: OS Independent',
+          'License :: OSI Approved :: MIT License',
+          'Programming Language :: Python :: 2',
+          'Programming Language :: Python :: 3',
+          'Operating System :: OS Independent'
       ],
       packages=setuptools.find_packages()
 )
