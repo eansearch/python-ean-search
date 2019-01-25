@@ -1,5 +1,5 @@
 """
-A Pyhon class for EAN and ISBN name lookup and validation using the API on ean-search.org.
+A Python class for EAN and ISBN name lookup and validation using the API on ean-search.org.
 
 To use it, you need an API access token from https://www.ean-search.org/ean-database-api.html
 
@@ -15,7 +15,7 @@ class EANSearch:
 		self.token = token;
 
 	def barcodeLookup(self, ean, lang=1):
-		"""Lookup the product name for a EAN barcode"""
+		"""Lookup the product name for an EAN barcode"""
 		contents = urllib.request.urlopen("https://api.ean-search.org/api?token=" + self.token \
 			+ "&op=barcode-lookup&format=json&ean=" + ean + "&lang=" + str(lang)).read().decode("utf-8")
 		data = json.loads(contents)
