@@ -12,11 +12,12 @@ import json
 class EANSearch:
 
 	def __init__(self, token):
-		self.token = token;
+		self._apiurl = "https://api.ean-search.org/api?token=" + token
+
 
 	def barcodeLookup(self, ean, lang=1):
 		"""Lookup the product name for an EAN barcode"""
-		contents = self._urlopen("https://api.ean-search.org/api?token=" + self.token \
+		contents = self._urlopen(self._apiurl \
 			+ "&op=barcode-lookup&format=json&ean=" + ean + "&lang=" + str(lang)).read().decode("utf-8")
 		data = json.loads(contents)
 		if "error" in data[0]:
@@ -26,7 +27,7 @@ class EANSearch:
 
 	def verifyChecksum(self, ean):
 		"""verify checksum of an EAN barcode"""
-		contents = self._urlopen("https://api.ean-search.org/api?token=" + self.token \
+		contents = self._urlopen(self._apiurl \
 			+ "&op=verify-checksum&format=json&ean=" + ean).read().decode("utf-8")
 		data = json.loads(contents)
 		if "error" in data[0]:
@@ -36,20 +37,20 @@ class EANSearch:
 
 	def productSearch(self, name, page=0):
 		"""search for a product name"""
-		contents = self._urlopen("https://api.ean-search.org/api?token=" + self.token \
+		contents = self._urlopen(self._apiurl \
 			+ "&op=product-search&format=json&name=" + name + "&page=" + str(page)).read().decode("utf-8")
 		data = json.loads(contents)
 		return data["productlist"]
 
 	def barcodePrefixSearch(self, prefix, page=0):
 		"""search for a prefix of EAN barcodes"""
-		contents = self._urlopen("https://api.ean-search.org/api?token=" + self.token \
+		contents = self._urlopen(self._apiurl \
 			+ "&op=barcode-prefix-search&format=json&prefix=" + prefix + "&page=" + str(page)).read().decode("utf-8")
 		data = json.loads(contents)
 		return data["productlist"]
 
 	def _urlopen(self, url):
-         if (sys.version_info > (3, 0)):
+         if (sys.version_info >= (3,)):
              import urllib.request
              return urllib.request.urlopen(url)
          else:
