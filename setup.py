@@ -6,17 +6,19 @@ with open("README.md", "r") as fh:
 setuptools.setup(name='eansearch',
       description='A Python class for EAN and ISBN name lookup and validation using the API on ean-search.org',
       long_description=long_description,
-      version='1.0.1',
+      long_description_content_type="text/markdown",
+      version='1.0.4',
       url='https://github.com/eansearch/python-ean-search',
       author='Jan Willamowius',
       author_email='info@relaxedcommunications.com',
+      packages=setuptools.find_packages(),
+      py_modules=['eansearch'],
       classifiers=[
           'License :: OSI Approved :: MIT License',
           'Programming Language :: Python :: 2',
           'Programming Language :: Python :: 3',
           'Operating System :: OS Independent'
       ],
-      package_dir={'': 'eansearch'},
-      packages=['eansearch'],
+      python_requires='>=2.0',
 )
 
