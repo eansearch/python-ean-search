@@ -11,12 +11,12 @@ from eansearch import EANSearch
 apiToken = "secret"
 ean = "5099750442227" # Thriller
 
-lookup = EANSearch(apiToken)
+eansearch = EANSearch(apiToken)
 
-name = lookup.barcodeLookup(ean)
+name = eansearch.barcodeLookup(ean)
 print(ean, " is ", name)
 
-ok = lookup.verifyChecksum(ean)
+ok = eansearch.verifyChecksum(ean)
 print(ean, " is ", "OK" if ok else "Not OK")
 
 eanList = eansearch.productSearch('iPod');
