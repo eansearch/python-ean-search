@@ -24,6 +24,15 @@ class EANSearch:
 		else:
 			return data[0]["name"]
 
+	def barcodeSearch(self, ean, lang=1):
+		"""Lookup the product info for an EAN barcode"""
+		contents = self._urlopen(self._apiurl + "&op=barcode-lookup&ean=" + ean + "&lang=" + str(lang))
+		data = json.loads(contents)
+		if "error" in data[0]:
+			return None
+		else:
+			return data[0]
+
 	def verifyChecksum(self, ean):
 		"""verify checksum of an EAN barcode"""
 		contents = self._urlopen(self._apiurl + "&op=verify-checksum&ean=" + ean)
