@@ -24,6 +24,10 @@ eanList = eansearch.productSearch('iPod');
 for product in eanList:
 	print(product["ean"], " is ", product["name"].encode("utf-8"))
 
+eanList = eansearch.categorySearch(45, 'thriller');
+for product in eanList:
+	print(product["ean"], " is ", product["name"].encode("utf-8"))
+
 eanList = eansearch.barcodePrefixSearch('4007249146');
 for product in eanList:
 	print(product["ean"], " is ", product["name"].encode("utf-8"))

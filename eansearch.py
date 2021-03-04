@@ -48,6 +48,12 @@ class EANSearch:
 		data = json.loads(contents)
 		return data["productlist"]
 
+	def categorySearch(self, category, name='', page=0, lang=99):
+		"""search for a product name"""
+		contents = self._urlopen(self._apiurl + "&op=category-search&category=" + str(category) + "&name=" + name + "&page=" + str(page) + "&language=" + str(lang))
+		data = json.loads(contents)
+		return data["productlist"]
+
 	def barcodePrefixSearch(self, prefix, page=0, lang=1):
 		"""search for a prefix of EAN barcodes"""
 		contents = self._urlopen(self._apiurl + "&op=barcode-prefix-search&prefix=" + prefix + "&page=" + str(page) + "&language=" + str(lang))
