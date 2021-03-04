@@ -17,7 +17,7 @@ class EANSearch:
 
 	def barcodeLookup(self, ean, lang=1):
 		"""Lookup the product name for an EAN barcode"""
-		contents = self._urlopen(self._apiurl + "&op=barcode-lookup&ean=" + ean + "&lang=" + str(lang))
+		contents = self._urlopen(self._apiurl + "&op=barcode-lookup&ean=" + ean + "&language=" + str(lang))
 		data = json.loads(contents)
 		if "error" in data[0]:
 			return None
@@ -26,7 +26,7 @@ class EANSearch:
 
 	def barcodeSearch(self, ean, lang=1):
 		"""Lookup the product info for an EAN barcode"""
-		contents = self._urlopen(self._apiurl + "&op=barcode-lookup&ean=" + ean + "&lang=" + str(lang))
+		contents = self._urlopen(self._apiurl + "&op=barcode-lookup&ean=" + ean + "&language=" + str(lang))
 		data = json.loads(contents)
 		if "error" in data[0]:
 			return None
@@ -42,15 +42,15 @@ class EANSearch:
 		else:
 			return data[0]["valid"]
 
-	def productSearch(self, name, page=0):
+	def productSearch(self, name, page=0, lang=99):
 		"""search for a product name"""
-		contents = self._urlopen(self._apiurl + "&op=product-search&name=" + name + "&page=" + str(page))
+		contents = self._urlopen(self._apiurl + "&op=product-search&name=" + name + "&page=" + str(page) + "&language=" + str(lang))
 		data = json.loads(contents)
 		return data["productlist"]
 
-	def barcodePrefixSearch(self, prefix, page=0):
+	def barcodePrefixSearch(self, prefix, page=0, lang=1):
 		"""search for a prefix of EAN barcodes"""
-		contents = self._urlopen(self._apiurl + "&op=barcode-prefix-search&prefix=" + prefix + "&page=" + str(page))
+		contents = self._urlopen(self._apiurl + "&op=barcode-prefix-search&prefix=" + prefix + "&page=" + str(page) + "&language=" + str(lang))
 		data = json.loads(contents)
 		return data["productlist"]
 
