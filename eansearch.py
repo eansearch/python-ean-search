@@ -63,8 +63,8 @@ class EANSearch:
 	def _urlopen(self, url):
          if (sys.version_info >= (3,)):
              import urllib.request
-             return urllib.request.urlopen(url).read().decode("utf-8")
+             return urllib.request.urlopen(url, timeout=180).read().decode("utf-8")
          else:
              import urllib2
-             return urllib2.urlopen(url).read().decode("utf-8")
+             return urllib2.urlopen(url, timeout=180).read().decode("utf-8")
 
