@@ -32,3 +32,12 @@ eanList = eansearch.barcodePrefixSearch('4007249146');
 for product in eanList:
 	print(product["ean"], " is ", product["name"].encode("utf-8"))
 
+country = eansearch.issuingCountryLookup("5099750442227")
+print(ean + " was issued in " + country)
+
+barcode = eansearch.barcodeImage("5099750442227")
+print("Barcode image for " + ean + " (base64 encoded): " + barcode)
+
+//import base64
+//print (base64.b64decode(barcode))
+

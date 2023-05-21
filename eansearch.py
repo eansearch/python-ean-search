@@ -68,3 +68,21 @@ class EANSearch:
              import urllib2
              return urllib2.urlopen(url, timeout=180).read().decode("utf-8")
 
+	def issuingCountryLookup(self, ean):
+		"""get issuing country of an EAN barcode"""
+		contents = self._urlopen(self._apiurl + "&op=issuing-country&ean=" + str(ean))
+		data = json.loads(contents)
+		if "error" in data[0]:
+			return None
+		else:
+			return data[0]["issuingCountry"]
+
+	def barcodeImage(self, ean):
+		"""get barcodeimage for EAN"""
+		contents = self._urlopen(self._apiurl + "&op=barcode-image&ean=" + str(ean))
+		data = json.loads(contents)
+		if "error" in data[0]:
+			return None
+		else:
+			return data[0]["barcode"]
+
