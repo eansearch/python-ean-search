@@ -33,6 +33,15 @@ class EANSearch:
 		else:
 			return data[0]
 
+	def isbnLookup(self, isbn):
+		"""Lookup the book title for an ISBN-10 or ISBN-13 barcode"""
+		contents = self._urlopen(self._apiurl + "&op=barcode-lookup&isbn=" + str(isbn))
+		data = json.loads(contents)
+		if "error" in data[0]:
+			return None
+		else:
+			return data[0]["name"]
+
 	def verifyChecksum(self, ean):
 		"""verify checksum of an EAN barcode"""
 		contents = self._urlopen(self._apiurl + "&op=verify-checksum&ean=" + str(ean))
