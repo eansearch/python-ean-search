@@ -20,6 +20,10 @@ print(ean, " is ", name)
 product = eansearch.barcodeSearch(ean, 1)
 print(ean, " is ", product["name"].encode("utf-8"), " from category ", product["categoryName"], " issued in ", product["issuingCountry"])
 
+isbn = "1119578884";
+title = eansearch.isbnLookup(isbn)
+print(isbn, " is ", title)
+
 ok = eansearch.verifyChecksum(ean)
 print(ean, " is ", "OK" if ok else "Not OK")
 
