@@ -7,13 +7,19 @@ Python 2.x or 3.x
 """
 
 import sys
+import time
 import json
 
 class EANSearch:
 
 	def __init__(self, token):
 		self._apiurl = "https://api.ean-search.org/api?token=" + token + "&format=json"
+		self._timeout = 180
+		self.MAX_API_TRIES = 3
 
+	def setTimeout(self, sec):
+		"""Set HTTP timeout in seconds"""
+		self._timeout = sec
 
 	def barcodeLookup(self, ean, lang=1):
 		"""Lookup the product name for an EAN barcode"""
@@ -51,14 +57,23 @@ class EANSearch:
 		else:
 			return data[0]["valid"]
 
-	def productSearch(self, name, page=0, lang=99):
-		"""search for a product name"""
+	def productSearch(self, name, page=0, lang=1):
+		"""search for a product name (exact search)"""
+		name = self._quote(name)
 		contents = self._urlopen(self._apiurl + "&op=product-search&name=" + name + "&page=" + str(page) + "&language=" + str(lang))
 		data = json.loads(contents)
 		return data["productlist"]
 
-	def categorySearch(self, category, name='', page=0, lang=99):
-		"""search for a product name"""
+	def similarProductSearch(self, name, page=0, lang=1):
+		"""search for a product name (find similar names)"""
+		name = self._quote(name)
+		contents = self._urlopen(self._apiurl + "&op=similar-product-search&name=" + name + "&page=" + str(page) + "&language=" + str(lang))
+		data = json.loads(contents)
+		return data["productlist"]
+
+	def categorySearch(self, category, name='', page=0, lang=1):
+		"""search for a product name (exact match)"""
+		name = self._quote(name)
 		contents = self._urlopen(self._apiurl + "&op=category-search&category=" + str(category) + "&name=" + name + "&page=" + str(page) + "&language=" + str(lang))
 		data = json.loads(contents)
 		return data["productlist"]
@@ -68,14 +83,6 @@ class EANSearch:
 		contents = self._urlopen(self._apiurl + "&op=barcode-prefix-search&prefix=" + str(prefix) + "&page=" + str(page) + "&language=" + str(lang))
 		data = json.loads(contents)
 		return data["productlist"]
-
-	def _urlopen(self, url):
-         if (sys.version_info >= (3,)):
-             import urllib.request
-             return urllib.request.urlopen(url, timeout=180).read().decode("utf-8")
-         else:
-             import urllib2
-             return urllib2.urlopen(url, timeout=180).read().decode("utf-8")
 
 	def issuingCountryLookup(self, ean):
 		"""get issuing country of an EAN barcode"""
@@ -94,4 +101,32 @@ class EANSearch:
 			return None
 		else:
 			return data[0]["barcode"]
+
+	def _quote(self, str):
+		if (sys.version_info >= (3,)):
+			import urllib.parse
+			return urllib.parse.quote_plus(str)
+		else:
+			import urllib2
+			return urllib2.quote(str)
+
+	def _urlopen(self, url, tries = 1):
+		if (sys.version_info >= (3,)):
+			import urllib.request, urllib.error
+			try:
+				connection = urllib.request.urlopen(url, timeout=self._timeout)
+			except urllib.error.HTTPError as e:
+				if e.code == 429 and tries < self.MAX_API_TRIES:
+					time.sleep(1)
+				return self._urlopen(url, tries+1)
+		else:
+			import urllib2
+			try:
+				connection = urllib2.urlopen(url, timeout=self._timeout)
+			except urllib2.HTTPError as e:
+				if e.code == 429 and tries < self.MAX_API_TRIES:
+					time.sleep(1)
+				return self._urlopen(url, tries+1)
+
+		return connection.read().decode("utf-8")
 

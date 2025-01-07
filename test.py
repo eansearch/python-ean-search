@@ -1,10 +1,11 @@
 #!/usr/bin/env python
 
 from eansearch import EANSearch
+import os
 
 # API token for ean-search.org account
 # https://www.ean-search.org/ean-database-api.html
-apiToken = "secret"
+apiToken = os.environ['EAN_SEARCH_API_TOKEN']
 ean = "5099750442227" # Thriller
 #ean = "5099750442228" # error
 
@@ -28,6 +29,10 @@ eanList = eansearch.productSearch('iPod')
 for product in eanList:
 	print(product["ean"], " is ", product["name"].encode("utf-8"))
 
+eanList = eansearch.similarProductSearch('iPod with extra features')
+for product in eanList:
+	print(product["ean"], " is ", product["name"].encode("utf-8"))
+
 eanList = eansearch.categorySearch(45, 'thriller')
 for product in eanList:
 	print(product["ean"], " is ", product["name"].encode("utf-8"))
@@ -42,6 +47,6 @@ print(ean + " was issued in " + country)
 barcode = eansearch.barcodeImage("5099750442227")
 print("Barcode image for " + ean + " (base64 encoded): " + barcode)
 
-//import base64
-//print (base64.b64decode(barcode))
+#import base64
+#print (base64.b64decode(barcode))
 
