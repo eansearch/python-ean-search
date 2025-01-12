@@ -96,13 +96,12 @@ class EANSearch:
 			return None
 		return data[0]["barcode"]
 
-	def _quote(self, str):
+	def _quote(self, param):
 		if (sys.version_info >= (3,)):
 			import urllib.parse
-			return urllib.parse.quote_plus(str)
-		else:
-			import urllib2
-			return urllib2.quote(str)
+			return urllib.parse.quote_plus(param)
+		import urllib2
+		return urllib2.quote(param)
 
 	def _urlopen(self, url, tries = 1):
 		if (sys.version_info >= (3,)):
