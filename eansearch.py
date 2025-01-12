@@ -27,8 +27,7 @@ class EANSearch:
 		data = json.loads(contents)
 		if "error" in data[0]:
 			return None
-		else:
-			return data[0]["name"]
+		return data[0]["name"]
 
 	def barcodeSearch(self, ean, lang=1):
 		"""Lookup the product info for an EAN barcode"""
@@ -36,8 +35,7 @@ class EANSearch:
 		data = json.loads(contents)
 		if "error" in data[0]:
 			return None
-		else:
-			return data[0]
+		return data[0]
 
 	def isbnLookup(self, isbn):
 		"""Lookup the book title for an ISBN-10 or ISBN-13 barcode"""
@@ -45,8 +43,7 @@ class EANSearch:
 		data = json.loads(contents)
 		if "error" in data[0]:
 			return None
-		else:
-			return data[0]["name"]
+		return data[0]["name"]
 
 	def verifyChecksum(self, ean):
 		"""verify checksum of an EAN barcode"""
@@ -54,8 +51,7 @@ class EANSearch:
 		data = json.loads(contents)
 		if "error" in data[0]:
 			return None
-		else:
-			return data[0]["valid"]
+		return data[0]["valid"]
 
 	def productSearch(self, name, page=0, lang=1):
 		"""search for a product name (exact search)"""
@@ -90,8 +86,7 @@ class EANSearch:
 		data = json.loads(contents)
 		if "error" in data[0]:
 			return None
-		else:
-			return data[0]["issuingCountry"]
+		return data[0]["issuingCountry"]
 
 	def barcodeImage(self, ean):
 		"""get barcodeimage for EAN"""
@@ -99,8 +94,7 @@ class EANSearch:
 		data = json.loads(contents)
 		if "error" in data[0]:
 			return None
-		else:
-			return data[0]["barcode"]
+		return data[0]["barcode"]
 
 	def _quote(self, str):
 		if (sys.version_info >= (3,)):
@@ -112,7 +106,8 @@ class EANSearch:
 
 	def _urlopen(self, url, tries = 1):
 		if (sys.version_info >= (3,)):
-			import urllib.request, urllib.error
+			import urllib.request
+			import urllib.error
 			try:
 				connection = urllib.request.urlopen(url, timeout=self._timeout)
 			except urllib.error.HTTPError as e:
