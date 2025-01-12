@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
-from eansearch import EANSearch
 import os
+from eansearch import EANSearch
 
 # API token for ean-search.org account
 # https://www.ean-search.org/ean-database-api.html
