@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import os
 from eansearch import EANSearch
@@ -8,6 +8,8 @@ from eansearch import EANSearch
 apiToken = os.environ['EAN_SEARCH_API_TOKEN']
 ean = "5099750442227" # Thriller
 #ean = "5099750442228" # error
+#ean = "195949821844" # 12-digit UPC
+#ean = "5-099750442227" # extra char
 
 eansearch = EANSearch(apiToken)
 
@@ -17,6 +19,7 @@ print(ean, " is ", name)
 # more detailed result, preferably in English (1)
 product = eansearch.barcodeSearch(ean, 1)
 print(ean, " is ", product["name"].encode("utf-8"), " from category ", product["categoryName"], " issued in ", product["issuingCountry"])
+exit(0)
 
 isbn = "1119578884"
 title = eansearch.isbnLookup(isbn)
