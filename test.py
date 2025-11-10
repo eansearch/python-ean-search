@@ -14,12 +14,11 @@ ean = "5099750442227" # Thriller
 eansearch = EANSearch(apiToken)
 
 name = eansearch.barcodeLookup(ean)
-print(ean, " is ", name)
+print(ean + " is " + name)
 
 # more detailed result, preferably in English (1)
 product = eansearch.barcodeSearch(ean, 1)
-print(ean, " is ", product["name"].encode("utf-8"), " from category ", product["categoryName"], " issued in ", product["issuingCountry"])
-exit(0)
+print(ean, "is", product["name"].encode("utf-8"), "from category", product["categoryName"], "(Google ID", product["googleCategoryId"], ") issued in", product["issuingCountry"])
 
 isbn = "1119578884"
 title = eansearch.isbnLookup(isbn)

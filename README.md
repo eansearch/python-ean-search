@@ -18,7 +18,7 @@ print(ean, " is ", name)
 
 # more detailed result, preferrably in English (1)
 product = eansearch.barcodeSearch(ean, 1)
-print(ean, " is ", product["name"].encode("utf-8"), " from category ", product["categoryName"], " issued in ", product["issuingCountry"])
+print(ean, " is ", product["name"].encode("utf-8"), " from category ", product["categoryName"], "(Google ID", product["googleCategoryId"], ") issued in", product["issuingCountry"])
 
 isbn = "1119578884"
 title = eansearch.isbnLookup(isbn)
