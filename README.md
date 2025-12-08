@@ -27,19 +27,21 @@ print(isbn, " is ", title)
 ok = eansearch.verifyChecksum(ean)
 print(ean, " is ", "OK" if ok else "Not OK")
 
-eanList = eansearch.productSearch('iPod')
+# search for product name "iPod", get the first page of the results, only English results
+eanList = eansearch.productSearch("iPod")
 for product in eanList:
 	print(product["ean"], " is ", product["name"].encode("utf-8"))
 
-eanList = eansearch.similarProductSearch('iPod with extra features')
+# search for similar product names, get the first page of the results, in any language
+eanList = eansearch.similarProductSearch("iPod with extra features", 0, 99)
 for product in eanList:
 	print(product["ean"], " is ", product["name"].encode("utf-8"))
 
-eanList = eansearch.categorySearch(45, 'thriller')
+eanList = eansearch.categorySearch(45, "thriller")
 for product in eanList:
 	print(product["ean"], " is ", product["name"].encode("utf-8"))
 
-eanList = eansearch.barcodePrefixSearch('4007249146')
+eanList = eansearch.barcodePrefixSearch("4007249146")
 for product in eanList:
 	print(product["ean"], " is ", product["name"].encode("utf-8"))
 
