@@ -67,7 +67,7 @@ class EANSearch:
 		data = json.loads(contents)
 		return data["productlist"]
 
-	def categorySearch(self, category, name='', page=0, lang=1):
+	def categorySearch(self, category, name, page=0, lang=1):
 		"""search for a product name (exact match)"""
 		name = self._quote(name)
 		contents = self._urlopen(self._apiurl + "&op=category-search&category=" + str(category) + "&name=" + name + "&page=" + str(page) + "&language=" + str(lang))
