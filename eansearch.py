@@ -88,9 +88,9 @@ class EANSearch:
 			return None
 		return data[0]["issuingCountry"]
 
-	def barcodeImage(self, ean):
+	def barcodeImage(self, ean, width=102, height=50):
 		"""get barcodeimage for EAN"""
-		contents = self._urlopen(self._apiurl + "&op=barcode-image&ean=" + str(ean))
+		contents = self._urlopen(self._apiurl + "&op=barcode-image&ean=" + str(ean) + "&width=" + str(width) + "&height=" + str(height))
 		data = json.loads(contents)
 		if "error" in data[0]:
 			return None

@@ -48,7 +48,7 @@ for product in eanList:
 country = eansearch.issuingCountryLookup("5099750442227")
 print(ean + " was issued in " + country)
 
-barcode = eansearch.barcodeImage("5099750442227")
+barcode = eansearch.barcodeImage("5099750442227", 300, 200)
 print("Barcode image for " + ean + " (base64 encoded): " + barcode)
 
 #import base64
