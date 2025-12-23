@@ -9,6 +9,8 @@ You can install the eansearch module directly with pip:
 python -m pip install eansearch
 ```
 
+Then use EANSearch in your own scripts like this:
+
 ```python
 from eansearch import EANSearch
 
