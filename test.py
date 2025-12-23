@@ -52,3 +52,5 @@ print("Barcode image for " + ean + " (base64 encoded): " + barcode)
 #import base64
 #print (base64.b64decode(barcode))
 
+print(str(eansearch.creditsRemaining()) + " credits remaining")
+

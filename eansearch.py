@@ -15,8 +15,9 @@ class EANSearch:
 	def __init__(self, token):
 		self._apiurl = "https://api.ean-search.org/api?token=" + token + "&format=json"
 		self._timeout = 30
-		self.MAX_API_TRIES = 3
 		self._ua = "python-eansearch/1.0"
+		self._remaining = -1
+		self.MAX_API_TRIES = 3
 
 	def setTimeout(self, sec):
 		"""Set HTTP timeout in seconds"""
@@ -97,6 +98,12 @@ class EANSearch:
 			return None
 		return data[0]["barcode"]
 
+	def creditsRemaining(self):
+		"""get number of requests remaining this month"""
+		if (self._remaining < 0):
+			self._urlopen(self._apiurl + "&op=account-status")
+		return self._remaining
+
 	def _quote(self, param):
 		if (sys.version_info >= (3,)):
 			import urllib.parse
@@ -110,6 +117,7 @@ class EANSearch:
 			import urllib.error
 			try:
 				connection = urllib.request.urlopen(Request(url, headers={'User-Agent': self._ua}), timeout=self._timeout)
+				self._remaining = int(connection.getheader('X-Credits-Remaining'))
 			except urllib.error.HTTPError as e:
 				if e.code == 429 and tries < self.MAX_API_TRIES:
 					time.sleep(1)
@@ -118,6 +126,7 @@ class EANSearch:
 			import urllib2
 			try:
 				connection = urllib2.urlopen(urllib2.Request(url, headers={'User-Agent': self._ua}), timeout=self._timeout)
+				self._remaining = int(connection.info().getheader('X-Credits-Remaining'))
 			except urllib2.HTTPError as e:
 				if e.code == 429 and tries < self.MAX_API_TRIES:
 					time.sleep(1)
