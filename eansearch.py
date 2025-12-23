@@ -14,8 +14,9 @@ class EANSearch:
 
 	def __init__(self, token):
 		self._apiurl = "https://api.ean-search.org/api?token=" + token + "&format=json"
-		self._timeout = 180
+		self._timeout = 30
 		self.MAX_API_TRIES = 3
+		self._ua = "python-eansearch/1.0"
 
 	def setTimeout(self, sec):
 		"""Set HTTP timeout in seconds"""
@@ -90,7 +91,7 @@ class EANSearch:
 
 	def barcodeImage(self, ean, width=102, height=50):
 		"""get barcodeimage for EAN"""
-		contents = self._urlopen(self._apiurl + "&op=barcode-image&ean=" + str(ean) + "&width=" + str(width) + "&height=" + str(height))
+		contents = self._urlopen(self._apiurl + "&op=barcode-image&ean=" + str(ean) + "&width=" + str(width) + "&height=" + str(height))
 		data = json.loads(contents)
 		if "error" in data[0]:
 			return None
@@ -105,10 +106,10 @@ class EANSearch:
 
 	def _urlopen(self, url, tries = 1):
 		if (sys.version_info >= (3,)):
-			import urllib.request
+			from urllib.request import urlopen, Request
 			import urllib.error
 			try:
-				connection = urllib.request.urlopen(url, timeout=self._timeout)
+				connection = urllib.request.urlopen(Request(url, headers={'User-Agent': self._ua}), timeout=self._timeout)
 			except urllib.error.HTTPError as e:
 				if e.code == 429 and tries < self.MAX_API_TRIES:
 					time.sleep(1)
@@ -116,7 +117,7 @@ class EANSearch:
 		else:
 			import urllib2
 			try:
-				connection = urllib2.urlopen(url, timeout=self._timeout)
+				connection = urllib2.urlopen(urllib2.Request(url, headers={'User-Agent': self._ua}), timeout=self._timeout)
 			except urllib2.HTTPError as e:
 				if e.code == 429 and tries < self.MAX_API_TRIES:
 					time.sleep(1)
