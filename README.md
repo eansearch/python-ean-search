@@ -4,6 +4,11 @@ A Python class for EAN and ISBN name lookup and validation using the API on http
 
 Compatible with Python 2.x **and** 3.x
 
+You can install the eansearch module directly with pip:
+```sh
+python -m pip install eansearch
+```
+
 ```python
 from eansearch import EANSearch
 
