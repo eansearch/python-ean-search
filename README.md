@@ -56,8 +56,5 @@ country = eansearch.issuingCountryLookup("5099750442227")
 print(ean + " was issued in " + country)
 
 barcode = eansearch.barcodeImage("5099750442227", 300, 200)
-print("Barcode image for " + ean + " (base64 encoded): " + barcode)
-
-#import base64
-#print (base64.b64decode(barcode))
+print("HTML: <img src=\"data:image/png;base64," + " encoded + ">")
 
