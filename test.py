@@ -14,7 +14,10 @@ ean = "5099750442227" # Thriller
 eansearch = EANSearch(apiToken)
 
 name = eansearch.barcodeLookup(ean)
-print(ean + " is " + name)
+if eansearch.error():
+	print("API error:", eansearch.error())
+	exit(1)
+print(ean + " is ", name if name is not None else "unknown")
 
 # more detailed result, preferably in English (1)
 product = eansearch.barcodeSearch(ean, 1)

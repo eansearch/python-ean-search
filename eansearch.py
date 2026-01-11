@@ -17,11 +17,16 @@ class EANSearch:
 		self._timeout = 30
 		self._ua = "python-eansearch/1.0"
 		self._remaining = -1
+		self._error = ""
 		self.MAX_API_TRIES = 3
 
 	def setTimeout(self, sec):
 		"""Set HTTP timeout in seconds"""
 		self._timeout = sec
+
+	def error(self):
+		"""Check if last API call produced an error"""
+		return self._error
 
 	def barcodeLookup(self, ean, lang=1):
 		"""Lookup the product name for an EAN barcode"""
@@ -112,6 +117,7 @@ class EANSearch:
 		return urllib2.quote(param)
 
 	def _urlopen(self, url, tries = 1):
+		self._error = ""	# clear last error
 		if (sys.version_info >= (3,)):
 			from urllib.request import urlopen, Request
 			import urllib.error
@@ -121,7 +127,9 @@ class EANSearch:
 			except urllib.error.HTTPError as e:
 				if e.code == 429 and tries < self.MAX_API_TRIES:
 					time.sleep(1)
-				return self._urlopen(url, tries+1)
+					return self._urlopen(url, tries+1)
+				self._error = "Server error " + str(e.code)
+				return "[{\"error\":\"" + self._error + "\"}]"
 		else:
 			import urllib2
 			try:
@@ -130,7 +138,9 @@ class EANSearch:
 			except urllib2.HTTPError as e:
 				if e.code == 429 and tries < self.MAX_API_TRIES:
 					time.sleep(1)
-				return self._urlopen(url, tries+1)
+					return self._urlopen(url, tries+1)
+				self._error = "Server error " + str(e.code)
+				return "[{\"error\":\"" + self._error + "\"}]"
 
 		return connection.read().decode("utf-8")
 
