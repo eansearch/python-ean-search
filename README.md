@@ -27,6 +27,7 @@ print(ean, " is ", name)
 product = eansearch.barcodeSearch(ean, 1)
 print(ean, " is ", product["name"].encode("utf-8"), " from category ", product["categoryName"], "(Google ID", product["googleCategoryId"], ") issued in", product["issuingCountry"])
 
+# search for ISBN-10, use barcodeLookup() for ISBN-13
 isbn = "1119578884"
 title = eansearch.isbnLookup(isbn)
 print(isbn, " is ", title)

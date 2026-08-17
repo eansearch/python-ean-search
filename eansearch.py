@@ -37,7 +37,7 @@ class EANSearch:
 		return data[0]["name"]
 
 	def barcodeSearch(self, ean, lang=1):
-		"""Lookup the product info for an EAN barcode"""
+		"""Lookup the product info for an EAN barcode (or ISBN-13)"""
 		contents = self._urlopen(self._apiurl + "&op=barcode-lookup&ean=" + str(ean) + "&language=" + str(lang))
 		data = json.loads(contents)
 		if "error" in data[0]:
@@ -45,7 +45,7 @@ class EANSearch:
 		return data[0]
 
 	def isbnLookup(self, isbn):
-		"""Lookup the book title for an ISBN-10 or ISBN-13 barcode"""
+		"""Lookup the book title for an ISBN-10 barcode (use barcodeLookup() for ISBN-13)"""
 		contents = self._urlopen(self._apiurl + "&op=barcode-lookup&isbn=" + str(isbn))
 		data = json.loads(contents)
 		if "error" in data[0]:
