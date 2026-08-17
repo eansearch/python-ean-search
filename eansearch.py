@@ -52,6 +52,38 @@ class EANSearch:
 			return None
 		return data[0]["name"]
 
+	def findEanForAsin(self, asin):
+		"""Lookup the EAN barcode for an ASIN (Amazon Standard Identification Number)"""
+		contents = self._urlopen(self._apiurl + "&op=ean-for-asin-lookup&asin=" + str(asin))
+		data = json.loads(contents)
+		if "error" in data[0]:
+			return None
+		return data[0]["ean"]
+
+	def findAsinForEan(self, ean):
+		"""Lookup the ASIN (Amazon Standard Identification Number) for an EAN barcode"""
+		contents = self._urlopen(self._apiurl + "&op=asin-for-ean-lookup&ean=" + str(ean))
+		data = json.loads(contents)
+		if "error" in data[0]:
+			return None
+		return data[0]["asin"]
+
+	def findEanForLccn(self, lccn):
+		"""Lookup the EAN barcode for an LCCN (Library of Congress Control Number), there coulbe be multiple EANs for one LCCN, we just return the first one"""
+		contents = self._urlopen(self._apiurl + "&op=ean-for-lccn-lookup&lccn=" + str(lccn))
+		data = json.loads(contents)
+		if "error" in data[0]:
+			return None
+		return data[0]["ean"]
+
+	def findLccnForEan(self, ean):
+		"""Lookup the LCCN (Library of Congress Control Number) for an EAN barcode"""
+		contents = self._urlopen(self._apiurl + "&op=lccn-for-ean-lookup&ean=" + str(ean))
+		data = json.loads(contents)
+		if "error" in data[0]:
+			return None
+		return data[0]["lccn"]
+
 	def verifyChecksum(self, ean):
 		"""verify checksum of an EAN barcode"""
 		contents = self._urlopen(self._apiurl + "&op=verify-checksum&ean=" + str(ean))

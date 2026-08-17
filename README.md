@@ -32,6 +32,7 @@ isbn = "1119578884"
 title = eansearch.isbnLookup(isbn)
 print(isbn, " is ", title)
 
+ean = "5099750442227" # Thriller
 ok = eansearch.verifyChecksum(ean)
 print(ean, " is ", "OK" if ok else "Not OK")
 
@@ -52,6 +53,26 @@ for product in eanList:
 eanList = eansearch.barcodePrefixSearch("4007249146")
 for product in eanList:
 	print(product["ean"], " is ", product["name"].encode("utf-8"))
+
+# lookup the EAN for an ASIN
+asin = "B00000J1V5"
+ean = eansearch.findEanForAsin(asin)
+print("ASIN ", asin, " is EAN ", ean)
+
+# lookup the ASIN for an EAN
+ean = "0722868396643"
+asin = eansearch.findAsinForEan(ean)
+print("EAN ", ean, " is ASIN ", asin)
+
+# lookup the LCCN for and ISBN-13 / EAN
+isbn13 = "9780815346333"
+lccn = eansearch.findLccnForEan(isbn13)
+print("ISBN-13 ", isbn13, " is LCCN ", lccn)
+
+# lookup the EAN / ISBN-13 for and LCCN
+lccn = "2020691629"
+ean = eansearch.findEanForLccn(lccn)
+print("LCCN ", lccn, " is EAN ", ean)
 
 country = eansearch.issuingCountryLookup("5099750442227")
 print(ean + " was issued in " + country)
