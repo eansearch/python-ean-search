@@ -16,6 +16,8 @@ eansearch = EANSearch(apiToken)
 name = eansearch.barcodeLookup(ean)
 if eansearch.error():
 	print("API error:", eansearch.error())
+	if "402" in eansearch.error():
+		print("Usage limit reached")
 	exit(1)
 print(ean + " is ", name if name is not None else "unknown")
 
@@ -27,6 +29,23 @@ isbn = "1119578884"
 title = eansearch.isbnLookup(isbn)
 print(isbn, " is ", title)
 
+asin = "B00000J1V5"
+ean = eansearch.findEanForAsin(asin)
+print("ASIN ", asin, " is EAN ", ean)
+
+ean = "0722868396643"
+asin = eansearch.findAsinForEan(ean)
+print("EAN ", ean, " is ASIN ", asin)
+
+isbn13 = "9780815346333"
+lccn = eansearch.findLccnForEan(isbn13)
+print("ISBN-13 ", isbn13, " is LCCN ", lccn)
+
+lccn = "2020691629"
+ean = eansearch.findEanForLccn(lccn)
+print("LCCN ", lccn, " is EAN ", ean)
+
+ean = "5099750442227" # Thriller
 ok = eansearch.verifyChecksum(ean)
 print(ean, " is ", "OK" if ok else "Not OK")
 
