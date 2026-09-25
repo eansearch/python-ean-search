@@ -23,7 +23,10 @@ print(ean + " is ", name if name is not None else "unknown")
 
 # more detailed result, preferably in English (1)
 product = eansearch.barcodeSearch(ean, 1)
-print(ean, "is", product["name"].encode("utf-8"), "from category", product["categoryName"], "(Google ID", product["googleCategoryId"], ") issued in", product["issuingCountry"])
+if product is not None:
+	print(ean, "is", product["name"].encode("utf-8"), "from category", product["categoryName"], "(Google ID", product["googleCategoryId"], ") issued in", product["issuingCountry"])
+else:
+	print(ean, "not found:", eansearch.error())
 
 isbn = "1119578884"
 title = eansearch.isbnLookup(isbn)
@@ -66,10 +69,11 @@ for product in eanList:
 	print(product["ean"], " is ", product["name"].encode("utf-8"))
 
 country = eansearch.issuingCountryLookup("5099750442227")
-print(ean + " was issued in " + country)
+print(ean + " was issued in " + (country if country is not None else "unknown"))
 
 barcode = eansearch.barcodeImage("5099750442227", 300, 200)
-print("HTML: <img src=\"data:image/png;base64," + barcode + "\">")
+if barcode is not None:
+	print("HTML: <img src=\"data:image/png;base64," + barcode + "\">")
 
 #import base64
 #print (base64.b64decode(barcode))
