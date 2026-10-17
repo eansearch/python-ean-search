@@ -24,7 +24,7 @@ print(ean + " is ", name if name is not None else "unknown")
 # more detailed result, preferably in English (1)
 product = eansearch.barcodeSearch(ean, 1)
 if product is not None:
-	print(ean, "is", product["name"].encode("utf-8"), "from category", product["categoryName"], "(Google ID", product["googleCategoryId"], ") issued in", product["issuingCountry"])
+	print(ean, "is", product["name"], "from category", product["categoryName"], "(Google ID", product["googleCategoryId"], ") issued in", product["issuingCountry"])
 else:
 	print(ean, "not found:", eansearch.error())
 
@@ -54,19 +54,19 @@ print(ean, " is ", "OK" if ok else "Not OK")
 
 eanList = eansearch.productSearch('iPod')
 for product in eanList:
-	print(product["ean"], " is ", product["name"].encode("utf-8"))
+	print(product["ean"], " is ", product["name"])
 
 eanList = eansearch.similarProductSearch('iPod with extra features')
 for product in eanList:
-	print(product["ean"], " is ", product["name"].encode("utf-8"))
+	print(product["ean"], " is ", product["name"])
 
 eanList = eansearch.categorySearch(45, 'thriller')
 for product in eanList:
-	print(product["ean"], " is ", product["name"].encode("utf-8"))
+	print(product["ean"], " is ", product["name"])
 
 eanList = eansearch.barcodePrefixSearch('4007249146')
 for product in eanList:
-	print(product["ean"], " is ", product["name"].encode("utf-8"))
+	print(product["ean"], " is ", product["name"])
 
 country = eansearch.issuingCountryLookup("5099750442227")
 print(ean + " was issued in " + (country if country is not None else "unknown"))

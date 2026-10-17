@@ -41,6 +41,10 @@ class EANSearch:
 		"""Set HTTP timeout in seconds"""
 		self._timeout = sec
 
+	def setUA(self, ua):
+		"""Set HTTP user agent"""
+		self._ua = ua
+
 	def error(self):
 		"""Check if last API call produced an error"""
 		return self._error
@@ -138,14 +142,23 @@ class EANSearch:
 	def _first(self, contents):
 		"""return the first result object, or None on error / empty / unexpected response"""
 		data = json.loads(contents)
-		if not isinstance(data, list) or not data or not isinstance(data[0], dict) or "error" in data[0]:
+		if not isinstance(data, list) or not data or not isinstance(data[0], dict):
+			return None
+		if "error" in data[0]:
+			self._error = str(data[0]["error"])
 			return None
 		return data[0]
 
 	def _productlist(self, contents):
 		"""return the product list, or [] on error / unexpected response"""
 		data = json.loads(contents)
+		if isinstance(data, list) and data and isinstance(data[0], dict) and "error" in data[0]:
+			self._error = str(data[0]["error"])
+			return []
 		if not isinstance(data, dict):
+			return []
+		if "error" in data:
+			self._error = str(data["error"])
 			return []
 		return data.get("productlist") or []
 

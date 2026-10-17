@@ -25,7 +25,7 @@ print(ean, " is ", name)
 
 # more detailed result, preferrably in English (1)
 product = eansearch.barcodeSearch(ean, 1)
-print(ean, " is ", product["name"].encode("utf-8"), " from category ", product["categoryName"], "(Google ID", product["googleCategoryId"], ") issued in", product["issuingCountry"])
+print(ean, " is ", product["name"], " from category ", product["categoryName"], "(Google ID", product["googleCategoryId"], ") issued in", product["issuingCountry"])
 
 # search for ISBN-10, use barcodeLookup() for ISBN-13
 isbn = "1119578884"
@@ -39,20 +39,20 @@ print(ean, " is ", "OK" if ok else "Not OK")
 # search for product name "iPod", get the first page of the results, only English results
 eanList = eansearch.productSearch("iPod")
 for product in eanList:
-	print(product["ean"], " is ", product["name"].encode("utf-8"))
+	print(product["ean"], " is ", product["name"])
 
 # search for similar product names, get the first page of the results, in any language
 eanList = eansearch.similarProductSearch("iPod with extra features", 0, 99)
 for product in eanList:
-	print(product["ean"], " is ", product["name"].encode("utf-8"))
+	print(product["ean"], " is ", product["name"])
 
 eanList = eansearch.categorySearch(45, "thriller")
 for product in eanList:
-	print(product["ean"], " is ", product["name"].encode("utf-8"))
+	print(product["ean"], " is ", product["name"])
 
 eanList = eansearch.barcodePrefixSearch("4007249146")
 for product in eanList:
-	print(product["ean"], " is ", product["name"].encode("utf-8"))
+	print(product["ean"], " is ", product["name"])
 
 # lookup the EAN for an ASIN
 asin = "B00000J1V5"
@@ -78,5 +78,5 @@ country = eansearch.issuingCountryLookup("5099750442227")
 print(ean + " was issued in " + country)
 
 barcode = eansearch.barcodeImage("5099750442227", 300, 200)
-print("HTML: <img src=\"data:image/png;base64," + " encoded + "\">")
+print('HTML: <img src="data:image/png;base64,' + barcode + '">')
 
